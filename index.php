@@ -82,6 +82,24 @@ session_start() ?>
                 <div><p><?= $_SESSION['errors']['phone'] ?></p></div>
             <?php
             endif; ?>
+
+            <!-- Pays -->
+            <div>
+                <label for="country">Pays</label>
+                <select name="country" id="country">
+                    <option value="">Sélectionnez votre pays</option>
+                    <option value="BE" <?= isset($_SESSION['old']['country']) ?>>Belgique</option>
+                    <option value="FR" <?= isset($_SESSION['old']['country']) ?>>France</option>
+                    <option value="NL" <?= isset($_SESSION['old']['country']) ?>>Pays-Bas</option>
+                    <option value="DE" <?= isset($_SESSION['old']['country']) ?>>Allemagne</option>
+                    <option value="LU" <?= isset($_SESSION['old']['country']) ?>>Luxembourg</option>
+                </select>
+                <?php
+                if (isset($_SESSION['errors']['country'])): ?>
+                    <div><p><?= $_SESSION['errors']['country'] ?></p></div>
+                <?php
+                endif; ?>
+            </div>
         </fieldset>
         <button type="submit">Déclarer mon animal</button>
     </form>
