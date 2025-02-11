@@ -24,6 +24,8 @@ session_start() ?>
           method="post">
         <fieldset>
             <legend>Vos coordonnées</legend>
+
+            <!--Email-->
             <div>
                 <label for="email"><abbr title="requis">*</abbr>&nbsp;Email</label>
                 <input type="email"
@@ -41,6 +43,8 @@ session_start() ?>
                 <div><p><?= $_SESSION['errors']['email'] ?></p></div>
             <?php
             endif; ?>
+
+            <!--Vérification Email-->
             <div>
                 <label for="vemail"><abbr title="requis">*</abbr>&nbsp;Retapez votre email une seconde
                     fois</label>
@@ -57,6 +61,25 @@ session_start() ?>
             <?php
             if (isset($_SESSION['errors']['vemail'])): ?>
                 <div><p><?= $_SESSION['errors']['vemail'] ?></p></div>
+            <?php
+            endif; ?>
+
+            <!--Téléphone-->
+            <div>
+                <label for="phone">Téléphone</label>
+                <input type="tel"
+                       name="phone"
+                       id="phone"
+                    <?php
+                    if (isset($_SESSION['old']['phone'])): ?>
+                        value="<?= $_SESSION['old']['phone'] ?>"
+                    <?php
+                    endif; ?>
+                       pattern="^\+?[0-9]{7,15}$">
+            </div>
+            <?php
+            if (isset($_SESSION['errors']['phone'])): ?>
+                <div><p><?= $_SESSION['errors']['phone'] ?></p></div>
             <?php
             endif; ?>
         </fieldset>
