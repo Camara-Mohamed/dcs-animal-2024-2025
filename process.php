@@ -3,10 +3,13 @@
 session_start();
 
 /*
- * Valider les deux champs
+ * Valider les champs
  */
 $email = '';
 $vemail = '';
+$phone = '';
+
+// Email
 if (array_key_exists('email', $_REQUEST)) {
     $email = trim($_REQUEST['email']);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -15,6 +18,8 @@ if (array_key_exists('email', $_REQUEST)) {
 } else {
     $_SESSION['errors']['email'] = 'L’email est requis';
 }
+
+// Vemail
 if (array_key_exists('vemail', $_REQUEST)) {
     $vemail = trim($_REQUEST['vemail']);
     if ($email !== $vemail) {
@@ -22,6 +27,14 @@ if (array_key_exists('vemail', $_REQUEST)) {
     }
 } else {
     $_SESSION['errors']['vemail'] = 'L’email de confirmation est requis';
+}
+
+// Phone
+if (array_key_exists('phone', $_REQUEST)) {
+    $phone = trim($_REQUEST['phone']);
+    if (!filter_var($phone, FILTER_SANITIZE_NUMBER_INT)) {
+        $_SESSION['errors']['phone'] = 'Le numéro de téléphone doit être valide';
+    }
 }
 
 /*
@@ -62,6 +75,8 @@ if (isset($_SESSION['errors'])) {
     <div>
         <dt>Email&nbsp;:</dt>
         <dd><?= $email ?></dd>
+        <dt>Numéro de téléphone&nbsp;:</dt>
+        <dd><?= $phone ?></dd>
     </div>
 </dl>
 </body>
