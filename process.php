@@ -8,6 +8,7 @@ session_start();
 $email = '';
 $vemail = '';
 $phone = '';
+$country = '';
 
 // Email
 if (array_key_exists('email', $_REQUEST)) {
@@ -34,6 +35,15 @@ if (array_key_exists('phone', $_REQUEST)) {
     $phone = trim($_REQUEST['phone']);
     if (!filter_var($phone, FILTER_SANITIZE_NUMBER_INT)) {
         $_SESSION['errors']['phone'] = 'Le numéro de téléphone doit être valide';
+    }
+}
+
+// Country
+$countryList = ['BE', 'FR', 'NL', 'DE', 'LU'];
+if (array_key_exists('country', $_REQUEST)) {
+    $country = trim($_REQUEST['country']);
+    if (!in_array($country, $countryList)) {
+        $_SESSION['errors']['country'] = 'Le pays sélectionné n’est pas valide';
     }
 }
 
@@ -77,6 +87,8 @@ if (isset($_SESSION['errors'])) {
         <dd><?= $email ?></dd>
         <dt>Numéro de téléphone&nbsp;:</dt>
         <dd><?= $phone ?></dd>
+        <dt>Pays&nbsp;:</dt>
+        <dd><?= $country ?></dd>
     </div>
 </dl>
 </body>
