@@ -7,7 +7,7 @@
         <meta name="description" content="Description">
         <meta name="keywords" content="Keywords">
         <meta name="author" content="Author">
-        <title>J&rsquo;ai perdu mon animal</title>
+        <title>J’ai perdu mon animal</title>
     </head>
     <body>
     <h1>Déclaration de perte d'animal</h1>
