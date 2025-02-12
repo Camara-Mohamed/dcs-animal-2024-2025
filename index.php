@@ -1,6 +1,9 @@
 <?php
 
-session_start() ?>
+session_start();
+$countries = require './config/countries.php';
+
+?>
     <!DOCTYPE html>
     <html lang="fr">
 
@@ -16,6 +19,7 @@ session_start() ?>
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible"
               content="ie=edge">
+        <script defer src="/js/main.js"></script>
         <title>J’ai perdu mon animal</title>
     </head>
     <body>
@@ -66,7 +70,7 @@ session_start() ?>
 
             <!--Téléphone-->
             <div>
-                <label for="phone">Téléphone</label>
+                <label for="phone">Téléphone <small>par exemple&nbsp;:+32 (0)4 666 66</small></label>
                 <input type="tel"
                        name="phone"
                        id="phone"
@@ -75,7 +79,7 @@ session_start() ?>
                         value="<?= $_SESSION['old']['phone'] ?>"
                     <?php
                     endif; ?>
-                       pattern="^\+?[0-9]{7,15}$">
+                >
             </div>
             <?php
             if (isset($_SESSION['errors']['phone'])): ?>
@@ -87,12 +91,13 @@ session_start() ?>
             <div>
                 <label for="country">Pays</label>
                 <select name="country" id="country">
-                    <option value="">Sélectionnez votre pays</option>
-                    <option value="BE" <?= isset($_SESSION['old']['country']) ?>>Belgique</option>
-                    <option value="FR" <?= isset($_SESSION['old']['country']) ?>>France</option>
-                    <option value="NL" <?= isset($_SESSION['old']['country']) ?>>Pays-Bas</option>
-                    <option value="DE" <?= isset($_SESSION['old']['country']) ?>>Allemagne</option>
-                    <option value="LU" <?= isset($_SESSION['old']['country']) ?>>Luxembourg</option>
+                    <?php foreach ($countries as $code => $name): ?>
+                        <option value="<?= $code ?>"
+                            <?php if (isset($_SESSION['old']['country']) && $code === $_SESSION['old']['country']): ?>
+                                selected
+                            <?php endif; ?>
+                        ><?= $name ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <?php
                 if (isset($_SESSION['errors']['country'])): ?>

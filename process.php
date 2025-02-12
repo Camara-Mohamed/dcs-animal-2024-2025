@@ -1,14 +1,25 @@
 <?php
 
 session_start();
+$countries = require './config/countries.php';
+require './core/validation.php';
+
+
+check_required('email');
+check_required('vemail');
+check_email('email');
+check_phone('phone');
+var_dump($_SESSION);
+die();
+check_same('veamil', 'email');
+// check_min('phone', 9);
+check_in_collection('country', 'countries');
 
 /*
  * Valider les champs
  */
 $email = '';
 $vemail = '';
-$phone = '';
-$country = '';
 
 // Email
 if (array_key_exists('email', $_REQUEST)) {
@@ -32,17 +43,16 @@ if (array_key_exists('vemail', $_REQUEST)) {
 
 // Phone
 if (array_key_exists('phone', $_REQUEST)) {
-    $phone = trim($_REQUEST['phone']);
-    if (!filter_var($phone, FILTER_SANITIZE_NUMBER_INT)) {
+    if (strlen($_REQUEST['phone']) >= 9 ||
+        !is_numeric(str_replace(['+', '(', ')', ' '], '', $_REQUEST['phone']))) {
         $_SESSION['errors']['phone'] = 'Le numéro de téléphone doit être valide';
     }
 }
 
 // Country
-$countryList = ['BE', 'FR', 'NL', 'DE', 'LU'];
 if (array_key_exists('country', $_REQUEST)) {
-    $country = trim($_REQUEST['country']);
-    if (!in_array($country, $countryList)) {
+    /** @var array $countries */
+    if (!array_key_exists($_REQUEST['country'], $countries)) {
         $_SESSION['errors']['country'] = 'Le pays sélectionné n’est pas valide';
     }
 }
@@ -88,7 +98,7 @@ if (isset($_SESSION['errors'])) {
         <dt>Numéro de téléphone&nbsp;:</dt>
         <dd><?= $phone ?></dd>
         <dt>Pays&nbsp;:</dt>
-        <dd><?= $country ?></dd>
+        <dd></dd>
     </div>
 </dl>
 </body>
